@@ -192,4 +192,47 @@ Filesystem 1K-blocks Used Available Use% Mounted on
 /dev/sdd2 3043836 4632 2864872 1% /media/user/uuid
 ```
 
+#### Swap Space
 
+Swapping is when your system uses disk space for storing idle programs and using RAM for active programs.
+Swap space is the space on your disk where the memory pages are stored.
+
+```bash
+free
+```
+```
+ total used free
+--snip--
+Swap: 514072 189804 324268
+```
+
+You can use a disk partition as swap space following below steps:
+
+1. Make sure partition is empty.
+2. Run *mkswap dev*, where dev is the partition’s device. This command puts a swap signature on the partition, 
+marking it as swap space (rather than a filesystem or otherwise).
+3. Execute *swapon dev* to register the space with the kernel.
+
+After creating a swap partition, you can put a new swap entry in your /etc/fstab file to make the system use 
+the swap space as soon as the machine boots.
+
+```
+/dev/sda5 none swap sw 0 0
+```
+
+You can also use a file as swap space. You create a file, initialize it as swap and add it to the swap pool.
+
+```bash
+dd if=/dev/zero of=swap_file bs=1024k count=num_mb
+mkswap swap_file
+swapon swap_file
+```
+
+#### Logical Volume Manager
+
+Making changes to your disk after installation is a hectic task and requires manual intervention at several steps.
+This can cause redundancy turning into errors. LVM solves that problem for us. Its system with 3 components,
+logical volume, volume group and physical volume. There can multiple physical volumes or logical volumes. One or more
+Physical volumes can be attached to a Volume group which then automatically creates or can be configured to create 
+one or more logical volumes. The user interacts with logical volumes, making it easier for a new disk to be added,
+removed, or resized.
