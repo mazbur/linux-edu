@@ -52,3 +52,47 @@ later v6 as well.
 Deals with sending raw data using hardware across physical medium. Using Fiber Optics, cable. Popular medium/protocol
 is Ethernet.
 
+#### Internet Layer
+
+Internet right now is based on two protocols, IP v4 and IPv6. Each host has one IPv4 address, in the form of `a.b.c.d`.
+Here each letter represents 8 bits or 1 byte. So each letter can have values ranging from 0 to 255. This also means
+that there are only ~4 billion, which is less than the number of people today and even less than the number of hosts.
+There are different methods like NAT gateway and private networks to resolve this. 
+
+To view IP adress of your computer use
+```bash
+ip address show
+```
+```
+2: enp0s31f6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state
+UP group default qlen 1000
+ link/ether 40:8d:5c:fc:24:1f brd ff:ff:ff:ff:ff:ff
+ inet 10.23.2.4/24 brd 10.23.2.255 scope global noprefixroute enp0s31f6
+ valid_lft forever preferred_lft forever
+```
+There will be lot of different outputs. This includes detains from physical layer, transport layer and some other stuff
+too.
+
+When we talked about LAN previously, it was an example of a subnet. Internet today is a big collection of subnets all
+around world. In a subnet there can be n number of hosts with each using a unique IP address. You define subnet using
+two pieces, a *network prefix* and *subnet mask*. Lets say you want to create a subnet of IP address from
+`10.23.2.1` to `10.23.2.254`. The common part will *network prefix* ie. `10.23.2.0` and *subnet mask* will be
+`255.255.255.0`. The entire subnet can be denoted as `10.23.2.0/255.255.255.0`.
+
+Now this can also be written as `10.23.2.0/24`. This is called the **Classless Inter-Domain Routing(CIDR)** notation.
+A *subnet mask* is nothing but leading 1s with 0s at the end. So instead of writing the whole *subnet mask* we just
+denote it by the number of leading 1s. 
+
+```
+Long form        CIDR form
+255.0.0.0           /8
+255.255.0.0         /16
+255.240.0.0         /12
+255.255.255.0       /24
+255.255.255.192     /26
+```
+
+#### Routes and Kernel Routing Table
+
+
+
